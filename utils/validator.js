@@ -1,16 +1,16 @@
 let { body, validationResult } = require('express-validator')
 let constants = require('./constants')
 let util = require('util')
-
+let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler')
 let options = {
-    password:{
+    password: {
         minLength: 8,
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1
     },
-    username:{
+    username: {
         minLength: 6
     }
 }
@@ -25,7 +25,7 @@ module.exports = {
         }
     },
     SignUpValidator: [
-        body("username").isLength(options.username).withMessage(util.format(constants.VALIDATOR_ERROR_USERNAME,options.username.minLength)),
+        body("username").isLength(options.username).withMessage(util.format(constants.VALIDATOR_ERROR_USERNAME, options.username.minLength)),
         body("password").isStrongPassword(options.password).withMessage(util.format(constants.VALIDATOR_ERROR_PASSWORD,
             options.password.minLength,
             options.password.minLowercase,
@@ -36,7 +36,7 @@ module.exports = {
     ],
     LoginValidator: [
         body("username").isLength(options.username).withMessage("username hoac password sai"),
-        body("password").isStrongPassword(options.password).withMessage("username hoac password sai") 
+        body("password").isStrongPassword(options.password).withMessage("username hoac password sai")
 
     ],
     ChangeValidator: [
@@ -63,7 +63,7 @@ module.exports = {
             options.password.minSymbols)),
     ],
     createUserValidator: [
-        body("username").isLength(options.username).withMessage(util.format(constants.VALIDATOR_ERROR_USERNAME,options.username.minLength)),
+        body("username").isLength(options.username).withMessage(util.format(constants.VALIDATOR_ERROR_USERNAME, options.username.minLength)),
         body("email").isEmail().withMessage(constants.VALIDATOR_ERROR_EMAIL),
     ],
     updateUserValidator: [
